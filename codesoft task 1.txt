@@ -1,0 +1,58 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        int a = 1;
+        int b= 1000;
+        int maxAttempts = 3;
+        int roundsWon = 0;
+        boolean playAgain = true;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+
+        while (playAgain) {
+            int randomNumber = random.nextInt(b - a + 1) + a;
+            int attemptsLeft = maxAttempts;
+            boolean guessedCorrectly = false;
+
+            System.out.println("\nI have selected a number between " + a + " and " + b + ".");
+            System.out.println("You have " + maxAttempts + " attempts to guess it correctly.");
+
+            while (attemptsLeft > 0) {
+                System.out.print("Enter your guess: ");
+                int userGuess = scanner.nextInt();
+
+                if (userGuess < randomNumber) {
+                    System.out.println("Too low! Try again.");
+                } else if (userGuess > randomNumber) {
+                    System.out.println("Too high! Try again.");
+                } else {
+                    System.out.println("Congratulations! You guessed the correct number: " + randomNumber);
+                    guessedCorrectly = true;
+                    roundsWon++;
+                    break;
+                }
+
+                attemptsLeft--;
+                System.out.println("Attempts left: " + attemptsLeft);
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("Sorry, you've run out of attempts. The correct number was: " + randomNumber);
+            }
+
+            System.out.println("Rounds won: " + roundsWon);
+
+            System.out.print("Do you want to play again? (yes/no): ");
+            String response = scanner.next().toLowerCase();
+            playAgain = response.equals("yes");
+        }
+
+        System.out.println("Thanks for playing! Your final score: " + roundsWon + " rounds won.");
+        scanner.close();
+    }
+}
